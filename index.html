@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SDNN Docs</title>
+    <meta name="description" content="Documentação do projeto SDNN" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+    <style>
+        #theme-toggle {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            z-index: 9999;
+            width: 42px;
+            height: 42px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            color: #111827;
+            border-radius: 8px;
+            padding: 0;
+            font-size: 0;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        body.dark-theme {
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        body.dark-theme .sidebar {
+            background: #111827;
+            border-right: 1px solid #1f2937;
+        }
+
+        body.dark-theme .sidebar ul li a,
+        body.dark-theme .sidebar h1,
+        body.dark-theme .sidebar h2,
+        body.dark-theme .sidebar h3,
+        body.dark-theme .sidebar h4,
+        body.dark-theme .sidebar h5,
+        body.dark-theme .sidebar h6 {
+            color: #e5e7eb;
+        }
+
+        body.dark-theme .content,
+        body.dark-theme .markdown-section {
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        body.dark-theme .markdown-section code,
+        body.dark-theme .markdown-section pre {
+            background: #111827;
+            color: #e5e7eb;
+        }
+
+        body.dark-theme .markdown-section table,
+        body.dark-theme .markdown-section tr,
+        body.dark-theme .markdown-section td,
+        body.dark-theme .markdown-section th {
+            border-color: #374151;
+        }
+
+        body.dark-theme .markdown-section a,
+        body.dark-theme .sidebar ul li.active>a {
+            color: #60a5fa;
+        }
+
+        body.dark-theme #theme-toggle {
+            background: #1f2937;
+            color: #f9fafb;
+            border-color: #374151;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="theme-toggle" type="button" aria-label="Ativar tema escuro" title="Ativar tema escuro">
+        <svg id="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9.37 5.51A7 7 0 0 0 12 19a7 7 0 0 0 6.49-4.37A8 8 0 1 1 9.37 5.51Z"></path>
+        </svg>
+    </button>
+    <div id="app"></div>
+    <script>
+        window.$docsify = {
+            name: "SDNN",
+            loadSidebar: true,
+            subMaxLevel: 3,
+            auto2top: true,
+            relativePath: true
+        };
+
+        (function () {
+            var storageKey = "sdnn-docs-theme";
+            var button = document.getElementById("theme-toggle");
+            var icon = document.getElementById("theme-icon");
+
+            var moonPath = "M9.37 5.51A7 7 0 0 0 12 19a7 7 0 0 0 6.49-4.37A8 8 0 1 1 9.37 5.51Z";
+            var sunPath = "M12 18a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1Zm0-16a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm9 9a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2h2ZM5 12a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2h2Zm11.66 5.24 1.41 1.41a1 1 0 0 1-1.41 1.41l-1.41-1.41a1 1 0 0 1 1.41-1.41ZM7.34 7.34a1 1 0 0 1 0 1.41L5.93 10.16a1 1 0 0 1-1.41-1.41l1.41-1.41a1 1 0 0 1 1.41 0Zm11.32 0a1 1 0 0 1 1.41 0l1.41 1.41a1 1 0 1 1-1.41 1.41l-1.41-1.41a1 1 0 0 1 0-1.41ZM7.34 16.66a1 1 0 0 1 0 1.41l-1.41 1.41a1 1 0 1 1-1.41-1.41l1.41-1.41a1 1 0 0 1 1.41 0ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z";
+
+            function setTheme(theme) {
+                var isDark = theme === "dark";
+                document.body.classList.toggle("dark-theme", isDark);
+                icon.firstElementChild.setAttribute("d", isDark ? sunPath : moonPath);
+                button.setAttribute("aria-label", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+                button.setAttribute("title", isDark ? "Ativar tema claro" : "Ativar tema escuro");
+                localStorage.setItem(storageKey, theme);
+            }
+
+            var stored = localStorage.getItem(storageKey);
+            if (stored === "dark" || stored === "light") {
+                setTheme(stored);
+            }
+
+            button.addEventListener("click", function () {
+                var next = document.body.classList.contains("dark-theme") ? "light" : "dark";
+                setTheme(next);
+            });
+        })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+</body>
+
+</html>
