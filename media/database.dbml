@@ -1,0 +1,40 @@
+Table users {
+  id uuid [pk]
+  email varchar [unique, not null]
+  password varchar [not null]
+  name varchar [not null]
+  role uuid
+  team uuid
+}
+
+Table roles {
+  id uuid [pk]
+  name varchar [not null]
+}
+
+Table teams {
+  id uuid [pk]
+  name varchar [not null]
+}
+
+Table datasets {
+  id uuid [pk]
+  name varchar [not null]
+  license uuid [not null]
+  path varchar [not null]
+  is_public boolean [default: false]
+  user_id uuid [not null]
+  team_id uuid
+}
+
+Table licenses {
+  id uuid [pk]
+  description text
+}
+
+Ref: users.role > roles.id
+Ref: users.team > teams.id
+
+Ref: datasets.license > licenses.id
+Ref: datasets.user_id > users.id
+Ref: datasets.team_id > teams.id
