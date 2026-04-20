@@ -53,14 +53,16 @@ Está fora do escopo desse documento abordar questões específicas sobre a arqu
 ## 5.1 Tabela: users
 Armazena as informações de identificação dos usuários.
 
-| Campo    | Tipo    | Descrição                                       |
-| -------- | ------- | ----------------------------------------------- |
-| id       | UUID    | Identificador único do usuário.                 |
-| email    | Varchar | Endereço de e-mail (único) para autenticação.   |
-| password | Varchar | Hash da senha de acesso.                        |
-| name     | Varchar | Nome completo do usuário.                       |
-| role     | UUID    | Referência ao papel do usuário na tabela roles. |
-| team     | UUID    | Referência ao time ao qual o usuário pertence.  |
+| Campo      | Tipo      | Descrição                                       |
+| ---------- | --------- | ----------------------------------------------- |
+| id         | UUID      | Identificador único do usuário.                 |
+| email      | Varchar   | Endereço de e-mail (único) para autenticação.   |
+| password   | Varchar   | Hash da senha de acesso.                        |
+| name       | Varchar   | Nome completo do usuário.                       |
+| role       | UUID      | Referência ao papel do usuário na tabela roles. |
+| team       | UUID      | Referência ao time ao qual o usuário pertence.  |
+| created_at | Timestamp | Data de criação do registro.                    |
+| updated_at | Timestamp | Data de atuallização do registro.               |
 ## 5.2 Tabela: roles
 Armazena o privilégio de cada usuário
 
@@ -71,23 +73,36 @@ Armazena o privilégio de cada usuário
 ## 5.3 Tabela: teams
 Gerencia os grupos criados para compartilhamento privado de dados.
 
-| Campo | Tipo    | Descrição                    |
-| ----- | ------- | ---------------------------- |
-| id    | UUID    | Identificador único do time. |
-| name  | Varchar | Nome identificador do time.  |
+| Campo      | Tipo      | Descrição                         |
+| ---------- | --------- | --------------------------------- |
+| id         | UUID      | Identificador único do time.      |
+| name       | Varchar   | Nome identificador do time.       |
+| created_at | Timestamp | Data de criação do registro.      |
+| updated_at | Timestamp | Data de atuallização do registro. |
 ## 5.4 Tabela: datasets
-Contém os metadados e as referências para os arquivos controlados pelo DVC.
+Contém os metadados e as referências para as versões dos arquivos.
 
-| Campo     | Tipo        | Descrição                                         |
-| --------- | ----------- | ------------------------------------------------- |
-| id        | UUID        | Identificador único do dataset.                   |
-| name      | Varchar     | Nome do dataset.                                  |
-| license   | UUID        | Referência ao tipo de licença na tabela licenses. |
-| path      | Varchar     | Caminho do arquivo no sistema/DVC.                |
-| is_public | Boolean     | Define se o dataset é público.                    |
-| user_id   | Foreign Key | Usuário responsável pelo dataset.                 |
-| team_id   | Foreign Key | Time ao qual o dataset pertence (opcional).       |
-## 5.5 Tabela: licenses
+| Campo      | Tipo        | Descrição                                         |
+| ---------- | ----------- | ------------------------------------------------- |
+| id         | UUID        | Identificador único do dataset.                   |
+| name       | Varchar     | Nome do dataset.                                  |
+| license    | UUID        | Referência ao tipo de licença na tabela licenses. |
+| path       | Varchar     | Caminho base do arquivo no sistema.               |
+| is_public  | Boolean     | Define se o dataset é público.                    |
+| user_id    | Foreign Key | Usuário responsável pelo dataset.                 |
+| team_id    | Foreign Key | Time ao qual o dataset pertence (opcional).       |
+| created_at | Timestamp   | Data de criação do registro.                      |
+| updated_at | Timestamp   | Data de atuallização do registro.                 |
+## 5.5 Tabela: dataset_version
+Contém os caminhos para os arquivos csv em si.
+
+| Campo | Tipo    | Descrição                       |
+| ----- | ------- | ------------------------------- |
+| id    | UUID    | Identificador único do dataset. |
+| name  | Varchar | Nome da versão.                 |
+| path  | Varchar | Caminho da versão no sistema.   |
+
+## 5.6 Tabela: licenses
 Tabela com todas as licenças disponíveis para atribuir aos *datasets* 
 
 | Campo       | Tipo | Descrição                       |
